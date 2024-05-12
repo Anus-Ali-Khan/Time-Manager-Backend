@@ -3,6 +3,7 @@ package com.anuscode.user;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 @Entity  // Connect to JPA (Hibernate)
@@ -25,19 +26,34 @@ public class User {
     private String taskType;
     private LocalDate dueDate;
     private boolean isCompleted;
+    private LocalDate dob;
+    @Transient // it will indicate that age will not be part of our database but calculated by upper variables
+    private Integer age;
 
     //Constructors
     public User(){
     }
 
-    public User(Long id, String title, String description, String taskType, LocalDate dueDate, boolean isCompleted){
+    public User(Long id, String title, String description, String taskType, LocalDate dueDate, boolean isCompleted, LocalDate dob){
         this.id = id;
         this.title = title;
         this.description=description;
         this.taskType = taskType;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
+        this.dob = dob;
     }
+
+    public User( String title, String description, String taskType, LocalDate dueDate, boolean isCompleted, LocalDate dob){
+        this.title = title;
+        this.description=description;
+        this.taskType = taskType;
+        this.dueDate = dueDate;
+        this.isCompleted = isCompleted;
+        this.dob = dob;
+    }
+
+
 
     //Getters
     public Long getId() {
@@ -64,6 +80,13 @@ public class User {
         return isCompleted;
     }
 
+    public LocalDate dob(){
+       return dob;
+    }
+
+    public Integer getAge(){
+        return Period.between(this.dob,LocalDate.now()).getYears();
+    }
     //Setters
 
     public void setId(Long id) {
@@ -90,17 +113,24 @@ public class User {
         isCompleted = completed;
     }
 
+    public void dob(LocalDate dob){
+        this.dob = dob;
+    }
+
+    public void setAge(Integer age){
+        this.age = age;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isCompleted == user.isCompleted && Objects.equals(id, user.id) && Objects.equals(title, user.title) && Objects.equals(description, user.description) && Objects.equals(taskType, user.taskType) && Objects.equals(dueDate, user.dueDate);
+        return isCompleted == user.isCompleted && Objects.equals(id, user.id) && Objects.equals(title, user.title) && Objects.equals(description, user.description) && Objects.equals(taskType, user.taskType) && Objects.equals(dueDate, user.dueDate) && Objects.equals(dob, user.dob) && Objects.equals(age, user.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, taskType, dueDate, isCompleted);
+        return Objects.hash(id, title, description, taskType, dueDate, isCompleted, dob, age);
     }
 
     @Override
@@ -112,6 +142,8 @@ public class User {
                 ", taskType='" + taskType + '\'' +
                 ", dueDate=" + dueDate +
                 ", isCompleted=" + isCompleted +
+                ", dob=" + dob +
+                ", age=" + age +
                 '}';
     }
 }

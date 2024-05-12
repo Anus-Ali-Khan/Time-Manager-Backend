@@ -1,6 +1,7 @@
 package com.anuscode.user;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,16 +13,14 @@ import java.util.List;
 @Service // this will instantiate this UserService class i.e convert it into spring bean
 public class UserService {
 
+    private final UserRepository  userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public List<User> getUsers(){
-        return List.of(
-                new User(
-                        1L,
-                        "Mariam",
-                        "Nothing",
-                        "Home",
-                        LocalDate.of(2000,Month.JANUARY,5),
-                        true
-                )
-        );
+       return userRepository.findAll();
     }
 }
