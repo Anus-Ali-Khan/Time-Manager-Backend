@@ -1,9 +1,7 @@
 package com.anuscode.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,16 @@ public class UserController {
 
     //GET API
     @GetMapping
-    public List<User> getUsers(){
+    public List<User> getTodos(){
         return userService.getUsers();
+    }
+
+//Post Api
+    @PostMapping
+    public void createNewTodo(@RequestBody User user){
+        System.out.println("RequestBody user");
+        System.out.println(user);
+        userService.addNewTodo(user);
     }
 }
 

@@ -34,6 +34,9 @@ public class UserConfig {
                     LocalDate.of(2004,Month.JANUARY,5)
             );
 
+            System.out.println("uyuyvyuv");
+            System.out.println(LocalDate.of(2004, Month.JANUARY,5));
+
             repository.saveAll(
                     List.of(mariam, alex)
             );
