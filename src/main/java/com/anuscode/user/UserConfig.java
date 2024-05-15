@@ -20,8 +20,8 @@ public class UserConfig {
                     "Nothing",
                     "Home",
                     LocalDate.of(2000, Month.JANUARY,5),
-                    true,
-                   LocalDate.of(2000,Month.JANUARY,5)
+                    true
+
             );
 
             User alex = new User(
@@ -30,12 +30,10 @@ public class UserConfig {
                     "Nothing",
                     "Home",
                     LocalDate.of(2004, Month.JANUARY,5),
-                    true,
-                    LocalDate.of(2004,Month.JANUARY,5)
+                    true
             );
 
-            System.out.println("uyuyvyuv");
-            System.out.println(LocalDate.of(2004, Month.JANUARY,5));
+
 
             repository.saveAll(
                     List.of(mariam, alex)

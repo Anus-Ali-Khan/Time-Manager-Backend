@@ -25,7 +25,7 @@ public class User {
     private String description;
     private String taskType;
     private LocalDate dueDate;
-    private LocalDate birth;
+
     private boolean isCompleted;
     @Transient // it will indicate that age will not be part of our database but calculated by upper variables
     private Integer age;
@@ -34,26 +34,24 @@ public class User {
     public User(){
     }
 
-    public User(Long id, String title, String description, String taskType, LocalDate dueDate, boolean isCompleted, LocalDate birth){
+    public User(Long id, String title, String description, String taskType, LocalDate dueDate, boolean isCompleted){
         this.id = id;
         this.title = title;
         this.description=description;
         this.taskType = taskType;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
-        this.birth = birth;
+
     }
 
-    public User(String title, String description, String taskType, LocalDate dueDate, boolean isCompleted, LocalDate birth){
-        System.out.println("birth in constructgor");
-        System.out.println(birth);
+    public User(String title, String description, String taskType, LocalDate dueDate, boolean isCompleted){
 
         this.title = title;
         this.description=description;
         this.taskType = taskType;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
-        this.birth = birth;
+
     }
 
 
@@ -83,12 +81,10 @@ public class User {
         return isCompleted;
     }
 
-    public LocalDate birth(){
-       return birth;
-    }
+
 
     public Integer getAge(){
-        return Period.between(this.birth , LocalDate.now()).getYears();
+        return Period.between(this.dueDate , LocalDate.now()).getYears();
     }
     //Setters
 
@@ -116,9 +112,7 @@ public class User {
         isCompleted = completed;
     }
 
-    public void birth(LocalDate birth){
-        this.birth = birth;
-    }
+
 
     public void setAge(Integer age){
         this.age = age;
@@ -128,12 +122,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isCompleted == user.isCompleted && Objects.equals(id, user.id) && Objects.equals(title, user.title) && Objects.equals(description, user.description) && Objects.equals(taskType, user.taskType) && Objects.equals(dueDate, user.dueDate) && Objects.equals(birth, user.birth) && Objects.equals(age, user.age);
+        return isCompleted == user.isCompleted && Objects.equals(id, user.id) && Objects.equals(title, user.title) && Objects.equals(description, user.description) && Objects.equals(taskType, user.taskType) && Objects.equals(dueDate, user.dueDate) && Objects.equals(age, user.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, taskType, dueDate, isCompleted, birth, age);
+        return Objects.hash(id, title, description, taskType, dueDate, isCompleted, age);
     }
 
     @Override
@@ -145,7 +139,6 @@ public class User {
                 ", taskType='" + taskType + '\'' +
                 ", dueDate=" + dueDate +
                 ", isCompleted=" + isCompleted +
-                ", birth=" + birth +
                 ", age=" + age +
                 '}';
     }

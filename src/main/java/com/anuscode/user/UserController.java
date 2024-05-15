@@ -22,12 +22,25 @@ public class UserController {
         return userService.getUsers();
     }
 
-//Post Api
+    //Post Api
     @PostMapping
     public void createNewTodo(@RequestBody User user){
-        System.out.println("RequestBody user");
-        System.out.println(user);
         userService.addNewTodo(user);
+    }
+
+    //Delete Api
+    @DeleteMapping(path = "{userId}")
+    public void deleteTodo(@PathVariable("userId") Long userId){
+        userService.deleteTodo(userId);
+    }
+
+    //Put(Update) Api
+    @PutMapping(path = "{userId}")
+    public void updateTodo(
+            @PathVariable("{userId}") Long userId,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String description){
+        userService.updateTodo(userId, title, description);
     }
 }
 

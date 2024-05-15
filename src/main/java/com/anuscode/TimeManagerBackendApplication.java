@@ -11,6 +11,4 @@ public class TimeManagerBackendApplication {
 		SpringApplication.run(TimeManagerBackendApplication.class, args);
 	}
 
-
-
 }
