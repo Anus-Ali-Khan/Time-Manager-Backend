@@ -36,6 +36,7 @@ public class UserService {
        userRepository.save(user);
     }
 
+    //Delete Api Logic
     public void deleteTodo(Long userId){
         boolean idExists = userRepository.existsById(userId);
         if(!idExists){
@@ -44,28 +45,31 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    //Update Api Logic
     @Transactional
-    public void updateTodo(Long userId, String title, String description){
+
+    public void updateTodo(Long userId, UserController.updateTodoRequest newRequest){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("todo with id " + userId + " does not exist"));
 
-        if(title != null &&
-                title.length() > 0 &&
-                !Objects.equals(user.getTitle(), title)){
-            Optional<User> userOptional = userRepository.findUserByTitle(title);
+
+        // For title
+        if(newRequest.title() != null &&
+                !newRequest.title().isEmpty() &&
+                !Objects.equals(user.getTitle(), newRequest.title())){
+            Optional<User> userOptional = userRepository.findUserByTitle(newRequest.title());
             if(userOptional.isPresent()){
                 throw new IllegalStateException("title taken");
             }
-            user.setTitle(title);
+            user.setTitle(newRequest.title());
         }
 
-        if(description != null && description.length() > 0 && !Objects.equals(user.getDescription(), description)){
-            user.setDescription(description);
+        //For description
+        if(newRequest.description() != null && !newRequest.description().isEmpty() && !Objects.equals(user.getDescription(), newRequest.description())){
+            user.setDescription(newRequest.description());
         }
+
+        userRepository.save(user);
     }
-
-
-
-
 
 }

@@ -35,12 +35,14 @@ public class UserController {
     }
 
     //Put(Update) Api
+
+    record updateTodoRequest(String title, String description){}
+
     @PutMapping(path = "{userId}")
     public void updateTodo(
-            @PathVariable("{userId}") Long userId,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String description){
-        userService.updateTodo(userId, title, description);
+            @PathVariable("userId") Long userId,
+            @RequestBody updateTodoRequest newRequest){
+        userService.updateTodo(userId, newRequest);
     }
 }
 
